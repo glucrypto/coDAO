@@ -10,4 +10,4 @@ Welcome to a new form of art auctions. Inspired by thoughts in the book Radical 
 
 ## Pay Breakdown
 * Owner:      93%
-* Society:    07%
+* Society:     7%

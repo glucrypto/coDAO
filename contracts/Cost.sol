@@ -46,10 +46,10 @@ contract Cost {
   function() external payable {
 
   }
-  function getCommonDAO(bytes32 _asset) view public returns(address){
+  function getCoDAO(bytes32 _asset) view public returns(address){
     return asset_registry[_asset].co_dao; 
   }
-  function getlessee(bytes32 _asset) view public returns(address){
+  function getLessee(bytes32 _asset) view public returns(address){
     return asset_registry[_asset].lessee; 
   }
   function getPrice(bytes32 _asset) view public returns(uint){
