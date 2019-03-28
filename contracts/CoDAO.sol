@@ -4,8 +4,8 @@ import "./Cost.sol";
 
 contract CoDAO is Cost{
 
-	mapping (address => uint) community_registry;
-	address coDAOowner;
+	mapping (address => bool) community_registry;
+	address payable coDAOowner;
 
 	constructor() public{
 		coDAOowner = msg.sender;
@@ -15,18 +15,18 @@ contract CoDAO is Cost{
      Costs 1 eth to create a community (subject to change, in the future may be a COST tax of it's own)
      Community is an address of a contract
   */ 
-  function createCommunity(address community) payable public {
+  function createCommunity() payable public {
     // add a protective clause around (pending withdraws)
     coDAOowner.transfer(msg.value);
-    community_registry[msg.sender] = community;
+    community_registry[msg.sender] = true;
   }
   
   /////////////// Methods to help communities manage assets and members ///////////////////
 
 	//Allow Members to pay tax or fund account
-  function payTax(address community, bytes32 _asset) payable public{	
+  function payTax(bytes32 _asset) payable public{	
     require (msg.sender == asset_registry[_asset].lessee,"Member does not lease the asset");
-    asset_registry[_asset].fundTaxAccount += msg.value;
+    asset_registry[_asset].taxFund += msg.value;
   }
 
   // Forclose (if there is no money left for asset attached to lessee), called by community
@@ -53,5 +53,11 @@ contract CoDAO is Cost{
 
   function() external payable {
 
+  }
+
+  function getCommunityRegistry(address community) view public returns(bool){
+
+    require (community_registry[community] == true,"Not a community");
+    return true; 
   }
 }

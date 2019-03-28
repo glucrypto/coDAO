@@ -2,7 +2,7 @@ const Cost = artifacts.require("Cost");
 
 
 contract("Cost", accounts => {
-	let co_dao = accounts[1];
+	let community_owner = accounts[1];
 	let price = 10;
 	let lister = accounts[2];
 	let newBidder_winner = accounts[3];
@@ -16,12 +16,12 @@ contract("Cost", accounts => {
 	before(async function(){
 		Cost.autogas = true;
 		instance = await Cost.deployed();
-		await instance.listAsset(co_dao,testAsset,10,{from: lister});
+		await instance.listAsset(community_owner,testAsset,10,{from: lister});
 	});
   		
 	it('should get asset', async () => {
 		let coDao = await instance.getCoDAO(testAsset);
-		assert.equal(coDao,co_dao);
+		assert.equal(coDao,community_owner);
 	});
 	it('should get lessee', async () => {
 		let lesseeOut = await instance.getLessee(testAsset);
@@ -37,7 +37,7 @@ contract("Cost", accounts => {
 		let coDao = await instance.getCoDAO(testAsset);
 		let lesseeOut = await instance.getLessee(testAsset);
 		assert.equal(lesseeOut,newBidder_winner);
-		assert.equal(coDao,co_dao);
+		assert.equal(coDao,community_owner);
 		assert.equal(priceOut,bid2);
 	});
 	it('should place Bid and reject new lessee', async () => {
@@ -54,7 +54,7 @@ contract("Cost", accounts => {
 		let coDao = await instance.getCoDAO(testAsset);
 		let lesseeOut = await instance.getLessee(testAsset);
 		assert.equal(lesseeOut,newBidder_winner);
-		assert.equal(coDao,co_dao);
+		assert.equal(coDao,community_owner);
 		assert.equal(priceOut,selfBid);
 	});
 	it('should deny non lessee to change price', async () => {
