@@ -1,13 +1,31 @@
 # COST Contracts
 
-Welcome to a new form of art auctions. Inspired by thoughts in the book Radical Markets (link to book/website) this perpetual contract aims to provide a proving ground for the C.O.S.T theory described in Radical Markets. 
+Welcome to a new form of managing communities. Inspired by thoughts in the book Radical Markets (link to book/website) these contract aims to provide a base layer to run communities based on collecting COST taxes. It allows communities to define how they would like to disperse community funds, handle foreclosures, and develop timeframes for collecting taxes. 
 
 ## Stack
-* COST.sol - base bidding and tax rate layer
-* coDAO.sol - L2 general purpose DAO to handle tax calculations
-* L3 - you build a contract ontop of coDAO to handle all the 
+* cost.sol - Registry for Assets, base tax layer, allows member to self asses
+* coDAO.sol - Registry for Communities: handles tax calculation, forclosure, paying tax, register communities, handle intra community sqabbles
+* Communities.sol - handle assets of the same type, register with coDAO
+* test/test_cost.js - testing for cost.sol -90% completed
+* test/test_coDAO.sol - testing for CoDAO.sol - 
 
 
 ## Pay Breakdown
 * Owner:      93%
-* Society:     7%
+* Communities: 7%
+
+## Community
+Creating a community costs 1 eth currently. Subject to change.
+Communities can: 
+- Parse out Community Funds
+- Pay coDAO dev fee 
+- Determine when to foreclose
+- Determine different times to collect
+- Determine ownership periods
+
+# Example Community:
+Coming Soon...
+
+### TODO:
+Test coDAO.sol
+Create Example community

@@ -4,33 +4,53 @@ import "./Cost.sol";
 
 contract CoDAO is Cost{
 
-	mapping (address => uint) pendingWithdraws;
+	mapping (address => uint) community_registry;
 	address coDAOowner;
 
 	constructor() public{
 		coDAOowner = msg.sender;
 	}
-
-	//Member pays tax
-  function payTax(bytes32 _asset) payable public{	
-  	// Look up asset and grab the owner
-  	require (msg.sender == asset_registry[_asset].lessee,"Member does not lease the asset");
-  	// Calc taxes with DAI integration for the price
-  	uint dailyTax = asset_registry[_asset].price * (tax_rate / 365);
-  	address coDAO_withdraw = asset_registry[_asset].co_dao;  	
-  	// Queue up a withdraw from the tax
-  	pendingWithdraws[coDAO_withdraw] += msg.value;
+  
+  /* Create a Community
+     Costs 1 eth to create a community (subject to change, in the future may be a COST tax of it's own)
+     Community is an address of a contract
+  */ 
+  function createCommunity(address community) payable public {
+    // add a protective clause around (pending withdraws)
+    coDAOowner.transfer(msg.value);
+    community_registry[msg.sender] = community;
   }
-	      
-  // Allows DAO organizer to get the the funds
-  function withdraw() public {
+  
+  /////////////// Methods to help communities manage assets and members ///////////////////
 
-  	require (msg.sender == coDAOowner);
-  	uint amount = pendingWithdraws[msg.sender];
-  	pendingWithdraws[msg.sender] = 0;
-  	msg.sender.transfer(amount);
-  	
+	//Allow Members to pay tax or fund account
+  function payTax(address community, bytes32 _asset) payable public{	
+    require (msg.sender == asset_registry[_asset].lessee,"Member does not lease the asset");
+    asset_registry[_asset].fundTaxAccount += msg.value;
   }
+
+  // Forclose (if there is no money left for asset attached to lessee), called by community
+  function foreclose (bytes32 _asset) public {
+    require (msg.sender == asset_registry[_asset].community_owner,"You are not the community owner");
+    require (0 == asset_registry[_asset].taxFund,"The lessee still has funds left in their tax account");
+   
+    asset_registry[_asset].lessee = msg.sender;
+    asset_registry[_asset].price = 0;
+    
+  }
+
+  //Allows community owner to collect taxes on an asset
+  function collectTax(bytes32 _asset, uint _dailyMultiplier) public {
+    // Calc taxes with DAI integration for the price
+    uint dailyTax = asset_registry[_asset].price * (tax_rate / 365) * _dailyMultiplier;
+
+    require (dailyTax >= asset_registry[_asset].taxFund,"Not enough taxes, consider notifying the member or foreclosing");
+    // Subtracts the funds
+    asset_registry[_asset].taxFund -= dailyTax;
+    // All good to tansfer the funds
+    msg.sender.transfer(dailyTax);
+  }
+
   function() external payable {
 
   }

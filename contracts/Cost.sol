@@ -2,9 +2,10 @@ pragma solidity >=0.4.21 <0.6.0;
 
 contract Cost {
   struct asset {
-    address payable co_dao;
+    address payable community_owner; // Address of the Community
     address lessee; // Current Highest Bidder
     uint price; // Current Price of the Asset
+    uint taxFund; // Tax amount the member has paid
   }
 
   // Map of lessees to assets
@@ -20,9 +21,9 @@ contract Cost {
     owner = msg.sender;
   }
   // Allow anyone to list an asset that contributes to a common DAO
-  function listAsset (address payable co_dao, bytes32 _asset,uint price) public {
+  function listAsset(address payable community_owner, bytes32 _asset,uint price) public {
 
-    asset_registry[_asset] = asset(co_dao,msg.sender,price);
+    asset_registry[_asset] = asset(community_owner,msg.sender,price);
   }
 
   // Anyone can place a bid
@@ -40,14 +41,19 @@ contract Cost {
   	require (msg.sender == asset_registry[_asset].lessee,"You are not the current lessee");
     asset_registry[_asset].price = msg.value;
   }
-
+  // Allows the lessee to fund their tax owed
+  function fundTaxAccount(bytes32 _asset) payable public{
+    // Allows current lessee of asset to self assess
+    require (msg.sender == asset_registry[_asset].lessee,"You are not the current lessee");
+    asset_registry[_asset].taxFund += msg.value;
+  }
   
 
   function() external payable {
 
   }
   function getCoDAO(bytes32 _asset) view public returns(address){
-    return asset_registry[_asset].co_dao; 
+    return asset_registry[_asset].community_owner; 
   }
   function getLessee(bytes32 _asset) view public returns(address){
     return asset_registry[_asset].lessee; 
