@@ -27,5 +27,6 @@ Communities can:
 Coming Soon...
 
 ### TODO:
-Test coDAO.sol
-Create Example community
+* Test coDAO.sol
+* Test taxFund variable in cost.sol
+* Create Example community
