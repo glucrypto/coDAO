@@ -18,7 +18,7 @@ contract Cost {
   address public owner;
 
   constructor() public {
-    owner = msg.sender;
+    owner = msg.sender; 
   }
   // Allow anyone to list an asset that contributes to a common DAO
   function listAsset(address payable community_owner, bytes32 _asset,uint price) public {

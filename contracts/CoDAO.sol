@@ -18,7 +18,7 @@ contract CoDAO is Cost{
   function createCommunity() payable public {
     // add a protective clause around (pending withdraws)
     coDAOowner.transfer(msg.value);
-    community_registry[msg.sender] = true;
+    community_registry[msg.sender] = true; 
   }
   
   /////////////// Methods to help communities manage assets and members ///////////////////
