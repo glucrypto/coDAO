@@ -4,8 +4,8 @@ Welcome to a new form of managing communities. Inspired by thoughts in the book 
 
 ## Stack
 * cost.sol - Registry for Assets, base tax layer, allows member to self asses
-* coDAO.sol - (calls cost) Registry for Communities: handles tax calculation, forclosure, paying tax, register communities, handle intra community sqabbles
-* Communities.sol (calls coDAO) - handle assets of the same type, register with coDAO
+* coDAO.sol - (calls cost.sol) Registry for Communities: handles tax calculation, forclosure, paying tax, register communities, handle intra community sqabbles
+* Communities.sol (calls coDAO.sol) - handle assets of the same type, register with coDAO
 * test/test_cost.js - testing for cost.sol - 90% completed
 * test/test_coDAO.sol - testing for CoDAO.sol - 5% completed
 
@@ -23,7 +23,7 @@ Communities can:
 - Determine different times to collect
 - Determine ownership periods
 
-# Example Community:
+## Example Community:
 Coming Soon...
 
 ### TODO:

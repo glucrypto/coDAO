@@ -23,7 +23,7 @@ contract CoDAO is Cost{
   
   /////////////// Methods to help communities manage assets and members ///////////////////
 
-	//Allow Members to pay tax or fund account
+	// Allow Members to pay tax or fund account
   function payTax(bytes32 _asset) payable public{	
     require (msg.sender == asset_registry[_asset].lessee,"Member does not lease the asset");
     asset_registry[_asset].taxFund += msg.value;
@@ -39,7 +39,7 @@ contract CoDAO is Cost{
     
   }
 
-  //Allows community owner to collect taxes on an asset
+  // Allows community owner to collect taxes on an asset
   function collectTax(bytes32 _asset, uint _dailyMultiplier) public {
     // Calc taxes with DAI integration for the price
     uint dailyTax = asset_registry[_asset].price * (tax_rate / 365) * _dailyMultiplier;
@@ -56,7 +56,6 @@ contract CoDAO is Cost{
   }
 
   function getCommunityRegistry(address community) view public returns(bool){
-
     require (community_registry[community] == true,"Not a community");
     return true; 
   }

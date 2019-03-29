@@ -22,7 +22,6 @@ contract Cost {
   }
   // Allow anyone to list an asset that contributes to a common DAO
   function listAsset(address payable community_owner, bytes32 _asset,uint price) public {
-
     asset_registry[_asset] = asset(community_owner,msg.sender,price,0);
   }
 
@@ -30,7 +29,6 @@ contract Cost {
   function placeBid(bytes32 _asset) public payable {
     // Convert to modifier
     require(msg.value > asset_registry[_asset].price, "Someone Bid Higher");
-    //TODO: Return money to sender ?
     asset_registry[_asset].lessee = msg.sender;
     asset_registry[_asset].price = msg.value;
   }
