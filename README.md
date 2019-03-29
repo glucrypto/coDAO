@@ -38,5 +38,5 @@ Coming Soon...
 * Test coDAO.sol
 * Test taxFund variable in cost.sol
 * Create Example community
-* Rinkeby testnet
+* Ropsten testnet
 * UI frontend
