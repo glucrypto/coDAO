@@ -20,7 +20,7 @@ contract("Cost", accounts => {
 	});
   		
 	it('should get asset', async () => {
-		let coDao = await instance.getCoDAO(testAsset);
+		let coDao = await instance.getCommunity(testAsset);
 		assert.equal(coDao,community_owner);
 	});
 	it('should get lessee', async () => {
@@ -34,7 +34,7 @@ contract("Cost", accounts => {
 	it('should place Bid and assign new lessee', async () => {
 		await instance.placeBid(testAsset,{from: newBidder_winner,value:bid2});
 		let priceOut = await instance.getPrice(testAsset);
-		let coDao = await instance.getCoDAO(testAsset);
+		let coDao = await instance.getCommunity(testAsset);
 		let lesseeOut = await instance.getLessee(testAsset);
 		assert.equal(lesseeOut,newBidder_winner);
 		assert.equal(coDao,community_owner);
@@ -49,9 +49,9 @@ contract("Cost", accounts => {
 		}
 	});
 	it('should allow new lessee to change price', async () => {
-		await instance.selfAssess(testAsset,{from: newBidder_winner,value:selfBid});		
+		await instance.selfAssess(testAsset,selfBid,{from: newBidder_winner});		
 		let priceOut = await instance.getPrice(testAsset);
-		let coDao = await instance.getCoDAO(testAsset);
+		let coDao = await instance.getCommunity(testAsset);
 		let lesseeOut = await instance.getLessee(testAsset);
 		assert.equal(lesseeOut,newBidder_winner);
 		assert.equal(coDao,community_owner);
@@ -59,7 +59,7 @@ contract("Cost", accounts => {
 	});
 	it('should deny non lessee to change price', async () => {
 		try{
-			await instance.selfAssess(testAsset,{from: newBidder_loser,value:selfBid});		
+			await instance.selfAssess(testAsset,selfBid,{from: newBidder_loser});	
 		}
 		catch(error){
 			assert.equal(error.reason,"You are not the current lessee");

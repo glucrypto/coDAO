@@ -29,15 +29,16 @@ contract Cost {
   function placeBid(bytes32 _asset) public payable {
     // Convert to modifier
     require(msg.value > asset_registry[_asset].price, "Someone Bid Higher");
+    // TODO: [2]
     asset_registry[_asset].lessee = msg.sender;
     asset_registry[_asset].price = msg.value;
   }
 
   // Allows the lessee to reassess the price of the asset
-  function selfAssess(bytes32 _asset) payable public{
+  function selfAssess(bytes32 _asset, uint _price) payable public{
   	// Allows current lessee of asset to self assess
   	require (msg.sender == asset_registry[_asset].lessee,"You are not the current lessee");
-    asset_registry[_asset].price = msg.value;
+    asset_registry[_asset].price = _price;
   }
   // Allows the lessee to fund their tax owed
   function fundTaxAccount(bytes32 _asset) payable public{
@@ -50,7 +51,7 @@ contract Cost {
   function() external payable {
 
   }
-  function getCoDAO(bytes32 _asset) view public returns(address){
+  function getCommunity(bytes32 _asset) view public returns(address){
     return asset_registry[_asset].community_owner; 
   }
   function getLessee(bytes32 _asset) view public returns(address){

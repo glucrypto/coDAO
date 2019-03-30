@@ -40,3 +40,11 @@ Coming Soon...
 * Create Example community
 * Ropsten testnet
 * UI frontend
+
+Methods:
+* [1] Return funds from tax account when someone else takes over the asset
+* [2] Allow lag time between when someone takes an asset from someone and it's awarded
+
+
+## Structure:
+CoDAO handles community functions. It wraps a layer around cost.sol asset functions. Members can pay tax on an assset regardless of the community owner. This is to protect the owners incase of a malicious community owner

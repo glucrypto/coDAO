@@ -22,11 +22,10 @@ contract CoDAO is Cost{
   }
   
   /////////////// Methods to help communities manage assets and members ///////////////////
+  function listCommunityAsset(bytes32 _asset,uint price) public {
+    require (msg.sender == asset_registry[_asset].community_owner,"You are not the community owner");
+    listAsset(msg.sender,_asset,price);
 
-	// Allow Members to pay tax or fund account
-  function payTax(bytes32 _asset) payable public{	
-    require (msg.sender == asset_registry[_asset].lessee,"Member does not lease the asset");
-    asset_registry[_asset].taxFund += msg.value;
   }
 
   // Forclose (if there is no money left for asset attached to lessee), called by community
@@ -40,15 +39,15 @@ contract CoDAO is Cost{
   }
 
   // Allows community owner to collect taxes on an asset
-  function collectTax(bytes32 _asset, uint _dailyMultiplier) public {
+  function collectTax(bytes32 _asset, uint _multiplier) public {
     // Calc taxes with DAI integration for the price
-    uint dailyTax = asset_registry[_asset].price * (tax_rate / 365) * _dailyMultiplier;
+    uint collections = asset_registry[_asset].price * (tax_rate / 365) * _multiplier;
 
-    require (dailyTax >= asset_registry[_asset].taxFund,"Not enough taxes, consider notifying the member or foreclosing");
+    require (collections >= asset_registry[_asset].taxFund,"Not enough taxes, consider notifying the member or foreclosing");
     // Subtracts the funds
-    asset_registry[_asset].taxFund -= dailyTax;
+    asset_registry[_asset].taxFund -= collections;
     // All good to tansfer the funds
-    msg.sender.transfer(dailyTax);
+    msg.sender.transfer(collections);
   }
 
   function() external payable {
@@ -56,7 +55,11 @@ contract CoDAO is Cost{
   }
 
   function getCommunityRegistry(address community) view public returns(bool){
-    require (community_registry[community] == true,"Not a community");
-    return true; 
+    if(community_registry[community] == true){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }
