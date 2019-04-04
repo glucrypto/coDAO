@@ -22,22 +22,23 @@ contract("CoDAO", accounts => {
 	});
 	it('should allow a community owner to list and asset', async () => {
 		// List asset
-		let asset1 = await instance.listCommunityAsset(testAsset,0, {from: community_owner});
-		await instance.getCommunity(asset1);
-		assert.equal(community_owner,asset1);
+		await instance.listCommunityAsset(testAsset,0, {from: community_owner});
+		let community_owner_saved = await instance.getCommunity(testAsset);
+		assert.equal(community_owner,community_owner_saved);
 	});
 	it('should allow a community owner to collect Tax', async() => {
-		let taxPay = await instance.collectTax(testAsset,1, {from: community_owner});
+		await instance.collectTax(testAsset,1, {from: community_owner});
 		let balOut = await web3.eth.getBalance(community_owner);
-		asset.equal(balOut,taxPay);
+		assert.equal(balOut,'99997053260000000000');
 	});
   	// TEST: function foreclose (bytes32 _asset)
 	it('should allow a community owner to foreclose on an Asset', async () => {
 		let taxPay = await instance.foreclose(testAsset,{from: community_owner});
 		let priceOut = await instance.getPrice(testAsset);
+		let priceConverted = priceOut.toString(10);
 		let lesseeOut = await instance.getLessee(testAsset);
-		asset.equal(community_owner, lesseeOut);
-		assert.equal(1,priceOut);
+		assert.equal(community_owner, lesseeOut);
+		assert.equal(0,priceOut);
 
 	});
 });

@@ -23,7 +23,7 @@ contract CoDAO is Cost{
   
   /////////////// Methods to help communities manage assets and members ///////////////////
   function listCommunityAsset(bytes32 _asset,uint price) public {
-    require (msg.sender == asset_registry[_asset].community_owner,"You are not the community owner");
+    require (community_registry[msg.sender] == true,"You are not a community owner");
     listAsset(msg.sender,_asset,price);
 
   }
@@ -47,7 +47,7 @@ contract CoDAO is Cost{
     // Subtracts the funds
     asset_registry[_asset].taxFund -= collections;
     // All good to tansfer the funds
-    msg.sender.transfer(collections);
+    msg.sender.transfer(collections);    
   }
 
   function() external payable {
@@ -61,5 +61,5 @@ contract CoDAO is Cost{
     else{
       return false;
     }
-  }
+  }  
 }
