@@ -44,7 +44,8 @@ Coming Soon...
 Methods:
 * [1] Return funds from tax account when someone else takes over the asset
 * [2] Allow lag time between when someone takes an asset from someone and it's awarded
-
-
+* [3] Add saving of Community Contract
+* [4] Add saving of assets
+* [5] Add tendermint tests
 ## Structure:
 CoDAO handles community functions. It wraps a layer around cost.sol asset functions. Members can pay tax on an assset regardless of the community owner. This is to protect the owners incase of a malicious community owner

@@ -51,13 +51,13 @@ contract Cost {
   function() external payable {
 
   }
-  function getCommunity(bytes32 _asset) view public returns(address){
+  function getCommunity(bytes32 _asset) external view returns(address){
     return asset_registry[_asset].community_owner; 
   }
-  function getLessee(bytes32 _asset) view public returns(address){
+  function getLessee(bytes32 _asset) external view returns(address){
     return asset_registry[_asset].lessee; 
   }
-  function getPrice(bytes32 _asset) view public returns(uint){
+  function getPrice(bytes32 _asset) external view returns(uint){
     return asset_registry[_asset].price; 
   }
 }

@@ -54,7 +54,7 @@ contract CoDAO is Cost{
 
   }
 
-  function getCommunityRegistry(address community) view public returns(bool){
+  function getCommunityRegistry(address community) external view returns(bool){
     if(community_registry[community] == true){
       return true;
     }
