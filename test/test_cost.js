@@ -24,7 +24,8 @@ contract("Cost", accounts => {
 		assert.equal(coDao,community_owner);
 	});
 	it('should get lessee', async () => {
-		let lesseeOut = await instance.getLessee(testAsset);
+		let lesseeOut = await instance.getLessee('0x74657374537472696e6700000000000000000000000000000000000000000000');
+		console.log(lesseeOut);
 		assert.equal(lesseeOut,lister);
 	});
 	it('should get Price', async () => {

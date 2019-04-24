@@ -4,25 +4,26 @@ const CoDAO = artifacts.require("CoDAO");
 contract("CoDAO", accounts => {
 	let community_owner = accounts[5];
 	let fake_comm = accounts[6];
-	let testAsset = web3.utils.fromAscii("testCommunityString").replace(/\0/g, '');
+	let testAsset = web3.utils.fromAscii("samwillthiswork").replace(/\0/g, '');
 	let leesse1 = accounts[7];
-
+	let commContractAddr = accounts[8];
 	before(async function(){
 		CoDAO.autogas = true;
 		instance = await CoDAO.deployed();
-		await instance.createCommunity({from: community_owner});
+		await instance.createCommunity(commContractAddr,{from: community_owner});
 	});
 	it('should verify if community exists', async () => {
-		let communityOwnerOut = await instance.getCommunityRegistry(community_owner);
+		let communityOwnerOut = await instance.getCommunityRegistry(community_owner,commContractAddr);
+		console.log(communityOwnerOut);
 		assert.equal(communityOwnerOut,true);
 	});
 	it('should assert not a community', async () => {
-		let communityOwnerOut = await instance.getCommunityRegistry(fake_comm);
+		let communityOwnerOut = await instance.getCommunityRegistry(fake_comm,commContractAddr);
 		assert.equal(communityOwnerOut,false);
 	});
 	it('should allow a community owner to list and asset', async () => {
 		// List asset
-		await instance.listCommunityAsset(testAsset,0, {from: community_owner});
+		await instance.listCommunityAsset(testAsset,0,commContractAddr, {from: community_owner});
 		let community_owner_saved = await instance.getCommunity(testAsset);
 		assert.equal(community_owner,community_owner_saved);
 	});
@@ -37,6 +38,7 @@ contract("CoDAO", accounts => {
 		let priceOut = await instance.getPrice(testAsset);
 		let priceConverted = priceOut.toString(10);
 		let lesseeOut = await instance.getLessee(testAsset);
+		console.log(lesseeOut);
 		assert.equal(community_owner, lesseeOut);
 		assert.equal(0,priceOut);
 
