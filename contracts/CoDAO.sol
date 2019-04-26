@@ -22,15 +22,16 @@ contract CoDAO is Cost{
   }
   
   /////////////// Methods to help communities manage assets and members ///////////////////
-  function listCommunityAsset(bytes32 _asset,uint price, address commContractAddr) public {
+  function listCommunityAsset(bytes32 _asset,uint price, address payable commContractAddr) public {
     require (community_registry[msg.sender] == commContractAddr,"You are not a community owner");
-    listAsset(msg.sender,_asset,price);
+    listAsset(commContractAddr,_asset,price);
 
   }
 
   // Forclose (if there is no money left for asset attached to lessee), called by community
-  function foreclose (bytes32 _asset) public {
-    require (msg.sender == asset_registry[_asset].community_owner,"You are not the community owner");
+  function foreclose (bytes32 _asset, address payable commContractAddr) public {
+    require (community_registry[msg.sender] == commContractAddr,"You are not a community owner");
+    require (commContractAddr == asset_registry[_asset].community_contract,"You are not the community owner");
     require (0 == asset_registry[_asset].taxFund,"The lessee still has funds left in their tax account");
    
     asset_registry[_asset].lessee = msg.sender;

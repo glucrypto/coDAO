@@ -6,7 +6,7 @@ contract("CoDAO", accounts => {
 	let fake_comm = accounts[6];
 	let testAsset = web3.utils.fromAscii("samwillthiswork").replace(/\0/g, '');
 	let leesse1 = accounts[7];
-	let commContractAddr = accounts[8];
+	let commContractAddr = accounts[9];
 	before(async function(){
 		CoDAO.autogas = true;
 		instance = await CoDAO.deployed();
@@ -25,7 +25,7 @@ contract("CoDAO", accounts => {
 		// List asset
 		await instance.listCommunityAsset(testAsset,0,commContractAddr, {from: community_owner});
 		let community_owner_saved = await instance.getCommunity(testAsset);
-		assert.equal(community_owner,community_owner_saved);
+		assert.equal(commContractAddr,community_owner_saved);
 	});
 	it('should allow a community owner to collect Tax', async() => {
 		await instance.collectTax(testAsset,1, {from: community_owner});
@@ -34,7 +34,7 @@ contract("CoDAO", accounts => {
 	});
   	// TEST: function foreclose (bytes32 _asset)
 	it('should allow a community owner to foreclose on an Asset', async () => {
-		let taxPay = await instance.foreclose(testAsset,{from: community_owner});
+		let taxPay = await instance.foreclose(testAsset,commContractAddr,{from: community_owner});
 		let priceOut = await instance.getPrice(testAsset);
 		let priceConverted = priceOut.toString(10);
 		let lesseeOut = await instance.getLessee(testAsset);

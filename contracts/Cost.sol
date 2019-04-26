@@ -2,7 +2,7 @@ pragma solidity >=0.4.21 <0.6.0;
 
 contract Cost {
   struct asset {
-    address payable community_owner; // Address of the Community
+    address payable community_contract; // Address of the Community
     address lessee; // Current Highest Bidder
     uint price; // Current Price of the Asset
     uint taxFund; // Tax amount the member has paid
@@ -21,8 +21,8 @@ contract Cost {
     owner = msg.sender; 
   }
   // Allow anyone to list an asset that contributes to a common DAO
-  function listAsset(address payable community_owner, bytes32 _asset,uint price) public {
-    asset_registry[_asset] = asset(community_owner,msg.sender,price,0);
+  function listAsset(address payable community_contract, bytes32 _asset,uint price) public {
+    asset_registry[_asset] = asset(community_contract,msg.sender,price,0);
   }
 
   // Anyone can place a bid
@@ -52,7 +52,7 @@ contract Cost {
 
   }
   function getCommunity(bytes32 _asset) external view returns(address){
-    return asset_registry[_asset].community_owner; 
+    return asset_registry[_asset].community_contract; 
   }
   function getLessee(bytes32 _asset) external view returns(address){
     return asset_registry[_asset].lessee; 
