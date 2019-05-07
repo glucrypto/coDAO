@@ -1,12 +1,12 @@
 const CoDAO = artifacts.require("CoDAO");
 
 
-contract("CoDAO", accounts => {
-	let community_owner = accounts[2];
-	let fake_comm = accounts[6];
-	let testAsset = web3.utils.fromAscii("samwillthiswork").replace(/\0/g, '');
+contract("CoDAO2", accounts => {
+	let community_owner = accounts[4];
+	let fake_comm = accounts[9];
+	let testAsset = web3.utils.fromAscii("samwillthisworkcodao2").replace(/\0/g, '');
 	let leesse1 = accounts[7];
-	let commContractAddr = accounts[3];
+	let commContractAddr = accounts[5];
 	before(async function(){
 		CoDAO.autogas = true;
 		instance = await CoDAO.deployed();

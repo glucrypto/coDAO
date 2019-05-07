@@ -35,11 +35,11 @@ Communities can:
 Coming Soon...
 
 ### TODO:
-* Test coDAO.sol
+* Test coDAO.sol - done 
 * Test taxFund variable in cost.sol
 * Create Example community
 * Ropsten testnet
-* UI frontend
+* UI frontend - codao.io
 
 Methods:
 * [1] Return funds from tax account when someone else takes over the asset
