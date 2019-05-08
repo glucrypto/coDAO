@@ -1,4 +1,4 @@
-const CoDAO = artifacts.require("CoDAO");
+const Community = artifacts.require("Community");
 
 
 contract("ASSETS3", accounts => {
@@ -13,8 +13,8 @@ contract("ASSETS3", accounts => {
 	let leesse1 = accounts[7];
 	let commContractAddr = accounts[5];
 	before(async function(){
-		CoDAO.autogas = true;
-		instance = await CoDAO.deployed();
+		Community.autogas = true;
+		instance = await Community.deployed();
 		let commRes = await instance.createCommunity(commContractAddr,{from: community_owner});
 	});
 	it('should verify if community exists', async () => {

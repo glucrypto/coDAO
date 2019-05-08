@@ -1,6 +1,6 @@
 const Migrations = artifacts.require("Migrations");
 const Cost = artifacts.require("Cost");
-const CoDAO = artifacts.require("Community");
+const Community = artifacts.require("Community");
 //const ParkingCoDAO = artifacts.require("parkingCoDAO");
 
 module.exports = function(deployer) {
