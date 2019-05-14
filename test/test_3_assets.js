@@ -29,7 +29,7 @@ contract("ASSETS3", accounts => {
 		await instance.listCommunityAsset(asset4,4,commContractAddr, {from: community_owner});
 		await instance.listCommunityAsset(asset5,5,commContractAddr, {from: community_owner});
 		await instance.listCommunityAsset(asset6,6,commContractAddr, {from: community_owner});
-		let community_owner_saved = await instance.getCommunity(testAsset);
+		//let community_owner_saved = await instance.getCommunity(testAsset);
 		//assert.equal(commContractAddr,community_owner_saved);
 	});
 });
