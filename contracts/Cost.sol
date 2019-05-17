@@ -43,8 +43,8 @@ contract Cost {
   // Allows the lessee to fund their tax owed
   function fundTaxAccount(bytes32 _asset) payable public{
     // Allows current lessee of asset to self assess
-    require (msg.sender == asset_registry[_asset].lessee,"You are not the current lessee");
-    asset_registry[_asset].taxFund += msg.value;
+    //require (msg.sender == asset_registry[_asset].lessee,"You are not the current lessee");
+    asset_registry[_asset].taxFund = msg.value;
   }
   
 
@@ -59,6 +59,9 @@ contract Cost {
   }
   function getPrice(bytes32 _asset) external view returns(uint){
     return asset_registry[_asset].price; 
+  }
+  function getTaxFund(bytes32 _asset) external view returns(uint){
+    return asset_registry[_asset].taxFund; 
   }
 }
   

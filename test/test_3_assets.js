@@ -1,4 +1,5 @@
 const Community = artifacts.require("Community");
+const COST = artifacts.require("Cost");
 
 
 contract("ASSETS3", accounts => {
@@ -15,6 +16,7 @@ contract("ASSETS3", accounts => {
 	before(async function(){
 		Community.autogas = true;
 		instance = await Community.deployed();
+		instanceCOST = await COST.deployed();
 		let commRes = await instance.createCommunity(commContractAddr,{from: community_owner});
 	});
 	it('should verify if community exists', async () => {
@@ -29,6 +31,11 @@ contract("ASSETS3", accounts => {
 		await instance.listCommunityAsset(asset4,4,commContractAddr, {from: community_owner});
 		await instance.listCommunityAsset(asset5,5,commContractAddr, {from: community_owner});
 		await instance.listCommunityAsset(asset6,6,commContractAddr, {from: community_owner});
+		let lesseeOut2 = await instance.getLessee(asset1,{from:community_owner});
+		console.log(lesseeOut2);
+		await instance.fundTaxAccount(asset1,{from:community_owner,value:1});
+		let out = await instance.getTaxFund(asset1);//,{from: commContractAddr,value:6});
+		console.log(out,out.toString(10));
 		//let community_owner_saved = await instance.getCommunity(testAsset);
 		//assert.equal(commContractAddr,community_owner_saved);
 	});

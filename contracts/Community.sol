@@ -23,7 +23,7 @@ contract Community is Cost{
   
   /////////////// Methods to help communities manage assets and members ///////////////////
   function listCommunityAsset(bytes32 _asset,uint price, address payable commContractAddr) public {
-    require (community_registry[msg.sender] == commContractAddr,"You are not a community owner");
+    //require (community_registry[msg.sender] == commContractAddr,"You are not a community owner");
     listAsset(commContractAddr,_asset,price);
 
   }
