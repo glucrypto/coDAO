@@ -26,8 +26,9 @@ contract LogoCommunity is Community{
   }
 
   function collectTax(bytes32 _asset) public{
-    if(ownStart == 30 days){
+    if(now == community_assets[_asset].ownStart + 30 days){
       collectTax(_asset,0);
+      community_assets[_asset].ownStart = now;
     }
 
   }
@@ -39,8 +40,7 @@ contract LogoCommunity is Community{
     }
   }
 
-  function disbursefunds(bytes32 _asset,address payable recipient, unint taxRate) public {
-    mapping (address => address) community_assets;
+  function disburseFunds(bytes32 _asset,address payable recipient, uint taxRate) public {
     //Transfer Funds to recipient depending on how much assets they own
     // Check to see if they are the owner
     address lessee = getLessee(_asset);
@@ -48,7 +48,7 @@ contract LogoCommunity is Community{
     uint totalPrice = getSumOfAssets(); // Returns # of assets
     
     uint fundAllowance = taxRate * (price - totalPrice);
-   recipient.transfer(fundAllownance);
+   recipient.transfer(fundAllowance);
 
   }
 
