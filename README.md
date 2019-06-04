@@ -42,9 +42,9 @@ Code breakdown:
 * Community.sol - Registry for Communities: handles tax calculation, foreclosure, and registering communities and community assets.
 * CoDAO.sol - controls Community.sol and Cost.sol
 
-## Funds Breakdown
-* Owner:      93%
-* Communities: 7%
+## Fund Breakdown
+* Lessee:      93%
+* Community: 7%
 
 ## Community
 Creating a community costs 1 eth currently. Subject to change.
@@ -60,10 +60,11 @@ Coming Soon...
 
 ## TODO:
 * Test coDAO.sol - done 
-* Test taxFund variable in cost.sol
+* Test taxFund variable in cost.sol - done
 * Create Example community
 * Ropsten testnet
 * UI frontend - codao.io
+* Determine how to call contracts from 
 
 ## Issues:
 1. Return funds from tax account when someone else takes over the asset
@@ -72,3 +73,4 @@ Coming Soon...
 ### Planned Technical features:
 * Tendermint/Cosmos integration (to improve transaction times)
 * Full IPFS integration (for large scale distributed hosting of asset and community information)
+* DAI integration
